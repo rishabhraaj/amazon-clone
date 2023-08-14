@@ -42,7 +42,7 @@ products.forEach((product) => {
 
     <div class="product-spacer"></div>
 
-    <div class="added-to-cart">
+    <div class="added-to-cart js-added-to-cart-${product.id}">
       <img src="images/icons/checkmark.png">
       Added
     </div>
@@ -61,10 +61,27 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
         const productId=button.dataset.productId;
         let matchingItem;
         
+        //Quantity Selector 
         const quantitySelector=document.querySelector(`.js-quantity-selector-${productId}`);
         const itemCount=Number(quantitySelector.value);
 
-          //Check if you already have matching order in the cart
+        //To display added message on the web page when you add a product to the cart
+        const message=document.querySelector(`.js-added-to-cart-${productId}`);
+        message.classList.add('added-to-cart-display');
+
+
+        //Using setTimeOut() to make the message dissaper after 2 seconds
+        function hideAddedMesage(){
+          message.classList.remove('added-to-cart-display');
+        }
+
+        setTimeout(function(){
+          hideAddedMesage()
+        },2000);
+
+
+
+        //Check if you already have matching order in the cart
         cart.forEach((item)=>{
             if(productId===item.productId){
                 matchingItem=item;
